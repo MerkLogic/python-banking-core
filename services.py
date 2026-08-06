@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from models import Account, TransactionHistory
 
 async def transfer_funds(session: AsyncSession, sender_account_id: int, receiver_account_id: int,
-                         amount: float) -> bool
+                         amount: float) -> bool:
     if amount <= 0:
         raise ValueError('Сумма перевода должна быть больше 0')
     if sender_account_id == receiver_account_id:
