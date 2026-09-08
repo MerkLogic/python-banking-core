@@ -1,9 +1,12 @@
+from decimal import Decimal
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import Account, TransactionHistory
 
+
 async def transfer_funds(session: AsyncSession, sender_account_id: int, receiver_account_id: int,
                          amount: float) -> bool:
+    amount = Decimal(str(amount))
     if amount <= 0:
         raise ValueError('Сумма перевода должна быть больше 0')
     if sender_account_id == receiver_account_id:
@@ -33,7 +36,7 @@ async def transfer_funds(session: AsyncSession, sender_account_id: int, receiver
         receiver.balance += amount
 
         success_tx = TransactionHistory(sender_account_id=sender.id, receiver_account_id=receiver.id, amount=amount,
-                                        status='SUCCESS', description='еревод выполнен успешно')
+                                        status='SUCCESS', description='Перевод выполнен успешно')
         session.add(success_tx)
         await session.commit()
         return True

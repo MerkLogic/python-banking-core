@@ -12,9 +12,9 @@ async def generate_audit_report(session: AsyncSession, client_id: int):
         return
     total_balance = sum(acc.balance for acc in client.accounts)
     account_ids = [acc.id for acc in client.accounts]
-    tx_stmt = (select(TransactionHistory).where(or_(TransactionHistory.sender_account_id.in_(account_ids),TransactionHistory.receiver_account_id.in_(account_ids)).order_by(TransactionHistory.timestamp.desc()).limit(5)))
+    tx_stmt = (select(TransactionHistory).where(or_(TransactionHistory.sender_account_id.in_(account_ids),TransactionHistory.receiver_account_id.in_(account_ids))).order_by(TransactionHistory.timestamp.desc()).limit(5))
     tx_res = await session.execute(tx_stmt)
-    recent_trans = tx_res.scalar().all()
+    recent_trans = tx_res.scalars().all()
 
     print('-' * 60)
     print(f'ОТЧЕТ АУДИТА КЛИЕНТА {client.full_name}')

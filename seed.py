@@ -20,7 +20,7 @@ async def seed_data():
         a3 = Account(account_number='4081781000000000000003', client_id=c2.id, balance=8000.0)
         a4 = Account(account_number='4081781000000000000004', client_id=c3.id, balance=1200.0, is_active=False)
 
-        session.add_all([a1, a2, a3])
+        session.add_all([a1, a2, a3, a4])
         await session.commit()
         print('БД инициализирована')
 if __name__ == '__main__':

@@ -27,7 +27,7 @@ class TransactionHistory(Base):
     __tablename__ = "transaction_history"
     id: Mapped[int] = mapped_column(primary_key=True)
     sender_account_id: Mapped[Optional[int]] = mapped_column(ForeignKey("accounts.id"), nullable=True)
-    receiver_account_id: Mapped[int] = mapped_column(ForeignKey("account.id"), nullable=False)
+    receiver_account_id: Mapped[int] = mapped_column(ForeignKey("accounts.id"), nullable=False)
     amount: Mapped[float] = mapped_column(Numeric(12,2), nullable=False)
     status: Mapped[str]= mapped_column(String(10), nullable=False)
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
